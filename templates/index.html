@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+        {% for post in posts %}
+        <p>
+        <h6>On {{post.date}} at {{post.time}}, {{post.sender}} wrote: </h6>
+        {{post.content}}
+        </p>
+        {% endfor %}
+
+
+{% endblock %}

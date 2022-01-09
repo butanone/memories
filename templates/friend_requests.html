@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Friend requests
+{% endblock %}
+
+{% block main %}
+    <table class = "table table-striped centered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Accept?</th>
+                <th>Confirm</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for friend_request in friend_requests %}
+             <tr>
+                <td>{{friend_request.friend_name}}</td>
+                <td>{{friend_request.requester}}</td>
+                <td>{{friend_request.date}}</td>
+                <td>{{friend_request.time}}</td>
+                <td><form action="/friend_requests" method="post">
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="answer" value="{{friend_request.friend_id}}accept" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                        Yes
+                        </label>
+                    </input>
+                    </div>
+                    <div class = "form-check">
+                    <input class="form-check-input" type="radio" name="answer" value="{{friend_request.friend_id}}reject" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                        No
+                        </label>
+                    </input>
+                    </div>
+                </td>
+                <td><button class = "btn btn-primary" type="submit">&#10003</button></form></td>
+             </tr>
+             {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}
+

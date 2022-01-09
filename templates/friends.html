@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Friend requests
+{% endblock %}
+
+{% block main %}
+    <table class = "table table-striped centered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Date accepted</th>
+                <th>Delete friend?</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for friend in friends %}
+             <tr>
+                <td>{{friend.firstname}}</td>
+                <td>{{friend.username}}</td>
+                <td>{{friend.date}}</td>
+                <td><form action="/friends" method="post"><button class = "btn btn-primary" type="submit" value="{{friend.friend_id}}" name="delete">Delete</button></form></td>
+             </tr>
+             {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}
+

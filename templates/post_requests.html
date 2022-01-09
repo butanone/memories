@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Post requests
+{% endblock %}
+
+{% block main %}
+
+    {% for post_request in post_requests%}
+        <p>
+        <h6>On {{post_request.date}} at {{post_request.time}}, {{post_request.sender}} wrote: </h6>
+        {{post_request.content}}
+        </p>
+        <form action="/post_requests" method="post">
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="answer" value="{{post_request.id}}accept" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+        Accept
+        </label>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="answer" value="{{post_request.id}}reject" id="flexRadioDefault2">
+        <label class="form-check-label" for="flexRadioDefault2">
+        Reject
+        </label>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+    {% endfor %}
+{% endblock %}
+

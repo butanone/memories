@@ -1,0 +1,11 @@
+
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Sad:(
+{% endblock %}
+
+{% block main %}
+    <img alt="{{ top }}" class="border" src="http://memegen.link/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?alt=https://www.worldsbestcatlitter.com/WBCL/wp-content/uploads/2020/05/WBC_sad_1.jpg" title="{{ top }}">
+{% endblock %}

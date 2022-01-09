@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Post memories
+{% endblock %}
+
+{% block main %}
+    <h4>
+        Here you can write some memories and choose which friends to send them to.
+    </h4><br>
+    <input autocomplete="off" autofocus class="form-control" placeholder="Search friends" type="text" id="friend"></input> <br>
+    <form action="/postmemories" method="post">
+        <div class="centered" style="width: 10rem;">
+        <ul class ="list-group list-group-flush" id="friends">
+        </ul>
+        </div>
+        <br><br>
+        <div>
+            <ul id="addedfriends"></ul>
+        </div>
+        <br><br><br>
+        <div class="form-group">
+            <h5>Memory content</h5>
+            <!-- todo : make this wider -->
+            <textarea class="form-control" name="memorycontent" rows="7"></textarea>
+        </div>
+            <button class="btn btn-primary" type="submit" id="submitButton">Submit</button>
+
+    </form>
+    <script crossorigin="anonymous" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // search for friends. TODO: is there a way that once a friend is added it no longer comes up? If can't figure this out - make sure to put sanitation in applicatoin.py
+
+        let input = document.querySelector('#friend');
+        input.addEventListener('keyup', function(){
+            $.get('f_search?q=' + input.value, function(users){
+                let html = '';
+                for (let user in users)
+                {
+                    username = users[user];
+
+                    html += '<li class="list-group-item"><button class="btn btn-success" type="button" id="usernameAppend" name="'+username+'">'+username+'</button></li>';
+                    // on the click of the button, add the username with a delete button below the dropdown
+                }
+                document.querySelector('#friends').innerHTML = html;
+                });
+        });
+        let i = 1;
+        // adds an added friend to page
+        document.addEventListener('click', function(e){
+            let addedfriends = document.getElementById('addedfriends');
+            let friendstoadd = document.getElementById('usernameAppend');
+            let html = '';
+
+            // if e if the thing that is clicked and the id of e is equal to
+            if (e.target && e.target.id == 'usernameAppend'){
+                html = '<input type="text" class="form-control" id="addedUsername" name="addedUsername'+i+'" value="'+e.target.getAttribute("name")+'"readonly></input><button class="btn btn-secondary" type="button" id="usernameDelete">Delete</button></li>';
+                // Remove that friend from the top list once clicked
+                friendstoadd.parentNode.removeChild(friendstoadd);
+                // This iterates the name of the person
+                i += 1;
+            }
+            addedfriends.innerHTML += html;
+
+        })
+        // deletes an added friend from page
+        document.addEventListener('click', function(e){
+            if (e.target && e.target.id == 'usernameDelete'){
+                let deleteButtons = document.getElementById("usernameDelete");
+                let deleteUsernames = document.getElementById("addedUsername");
+                // Remove the button and username from the page
+                deleteButtons.parentNode.removeChild(deleteButtons);
+                deleteUsernames.parentNode.removeChild(deleteUsernames);
+            }
+
+        });
+
+
+
+
+    </script>
+
+{% endblock %}
